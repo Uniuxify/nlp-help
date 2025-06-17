@@ -37,6 +37,7 @@ def red_button(text, or_token):
         clipboard.copy(response)
     except Exception as e:
         clipboard.copy(f'!failed: {e}')
+        llm = None
 
 
 dict_ = {
