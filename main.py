@@ -671,3 +671,5 @@ try:
 except KeyboardInterrupt:
     print('Interrupted')'''
 }
+
+funcs = list(dict_.keys())
