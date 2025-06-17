@@ -19,6 +19,8 @@ def red_button(text):
 
         from langchain_openai import ChatOpenAI
 
+        global llm
+
         if not llm:
             llm = ChatOpenAI(
                 base_url="https://openrouter.ai/api/v1/",
