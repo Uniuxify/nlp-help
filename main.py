@@ -669,7 +669,58 @@ try:
             print(f'epoch: {epoch:<3} | train_loss: {train_loss_log[-1]:.{5}f} | train_acc: {train_acc_log[-1]:.{5}f} | test_loss: {test_loss_log[-1]:.{5}f} | test_acc: {test_acc_log[-1]:.{5}f} | eta: {eta} ({epoch_time})')
 
 except KeyboardInterrupt:
-    print('Interrupted')'''
+    print('Interrupted')''',
+
+'conv1d': '''
+from math import floor
+
+class MyConv1d(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, stride=1, padding=0, dilation=1, bias=True):
+
+        super().__init__()
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.kernel_size = kernel_size
+        self.stride = stride
+        self.padding = padding
+        
+        self.weight = nn.Parameter(
+            torch.Tensor(out_channels, in_channels, kernel_size)
+        )
+        
+        self.reset_parameters()
+    
+    def reset_parameters(self):
+        nn.init.kaiming_uniform_(self.weight, mode='fan_in', nonlinearity='relu')
+   
+    def forward(self, x):
+
+        batch_size, in_channels, input_len = x.shape
+
+        
+        output_len = floor(
+            (input_len + 2 * self.padding - (self.kernel_size - 1) - 1) / self.stride + 1
+        )
+
+        if self.padding > 0:
+            x_padded = F.pad(x, (self.padding, self.padding), mode='constant', value=0)
+        else:
+            x_padded = x
+        
+        output = torch.zeros(batch_size, self.out_channels, output_len, device=x.device)
+        
+        for b in range(batch_size):
+            for oc in range(self.out_channels):
+                for i in range(output_len):
+                    start = i * self.stride
+                    end = start + self.kernel_size
+                    
+                    window = x_padded[b, :, start:end]
+                    
+                    conv_result = (window * self.weight[oc]).sum()
+                    output[b, oc, i] = conv_result
+        
+        return output'''
 }
 
 funcs = list(dict_.keys())
