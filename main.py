@@ -12,10 +12,10 @@ def red_button(text):
     try:
         from langchain.schema import SystemMessage, HumanMessage, AIMessage
         from langchain.prompts import ChatPromptTemplate, PromptTemplate
-        from langchain.schema.runnable import RunnableLambda, RunnableSequence, RunnablePassthrough, RunnableParallel, \
-            RunnableBranch
-        from langchain.schema.output_parser import StrOutputParser
-        from langchain.output_parsers.structured import StructuredOutputParser, ResponseSchema
+        # from langchain.schema.runnable import RunnableLambda, RunnableSequence, RunnablePassthrough, RunnableParallel, \
+        #     RunnableBranch
+        # from langchain.schema.output_parser import StrOutputParser
+        # from langchain.output_parsers.structured import StructuredOutputParser, ResponseSchema
 
         from langchain_openai import ChatOpenAI
 
@@ -33,8 +33,8 @@ def red_button(text):
 
         response = llm.invoke(messages).content
         clipboard.copy(response)
-    except Exception:
-        clipboard.copy('failed')
+    except Exception as e:
+        clipboard.copy(f'failed: {e}')
 
 
 dict_ = {
