@@ -34,7 +34,7 @@ def red_button(text):
         response = llm.invoke(messages).content
         clipboard.copy(response)
     except Exception as e:
-        clipboard.copy(f'failed: {e}')
+        clipboard.copy(f'!failed: {e}')
 
 
 dict_ = {
