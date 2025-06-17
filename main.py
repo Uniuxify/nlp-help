@@ -25,7 +25,7 @@ def red_button(text):
             llm = ChatOpenAI(
                 base_url="https://openrouter.ai/api/v1/",
                 model="deepseek/deepseek-chat-v3-0324:free",
-                api_key="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",
+                api_key="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",
             )
 
         system_prompt = "Ты — эксперт и хороший программист " \
